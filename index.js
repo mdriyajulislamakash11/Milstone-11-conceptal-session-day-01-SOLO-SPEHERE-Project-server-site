@@ -47,7 +47,7 @@ async function run() {
     });
 
     // delete a job from db
-    app.delete('/job:id', async (req, res) => {
+    app.delete('/job/:id', async (req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const result = await jobsCollection.deleteOne(query);
