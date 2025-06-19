@@ -31,12 +31,20 @@ async function run() {
     });
 
     // get all jobs posted by a specific user with email base
-    app.get('/jobs/:email', async (req, res) => {
+    app.get("/jobs/:email", async (req, res) => {
       const email = req.params.email;
-      const query = {'buyer.email' : email};
-      const result = await jobsCollection.find(query).toArray()
-      res.send(result)
-    })
+      const query = { "buyer.email": email };
+      const result = await jobsCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // get a single job data by id from db
+    app.get("/job/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await jobsCollection.findOne(query);
+      res.send(result);
+    });
 
     // save a job data
     app.post("/add-job", async (req, res) => {
@@ -47,12 +55,12 @@ async function run() {
     });
 
     // delete a job from db
-    app.delete('/job/:id', async (req, res) => {
+    app.delete("/job/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) };
       const result = await jobsCollection.deleteOne(query);
-      res.send(result)
-    })
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
