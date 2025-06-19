@@ -3,7 +3,7 @@ const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
@@ -26,6 +26,7 @@ async function run() {
 
     app.post("/add-job", async (req, res) => {
       const jobData = req.body;
+      console.log(jobData)
       const result = await jobsCollection.insertOne(jobData);
       res.send(result);
     });
